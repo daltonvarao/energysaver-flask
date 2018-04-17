@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+<body>
+    <div class="jumbotron text-light col-6 bg-dark mx-auto">
+        <h1>Usuarios</h1>
+        <ul class="list-group">
+            {% for user in users %}
+                <li class="list-group-item disabled">
+                    <span>{{user.user}}</span>
+                    <a href="usuarios/editar/{{user.user}}"><i class="float-right fa fa-pencil ml-2" alt="editar"></i></a>
+                    <a href="usuarios/apagar/{{user.user}}"><i class="float-right fa fa-close" alt="apagar"></i></a>
+                </li>
+            {% endfor%}
+        </ul>
+    </div>
+</body>
+{% endblock  %}
