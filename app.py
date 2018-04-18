@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import Flask, render_template, request, redirect, session, url_for, escape, flash
+from flask import Flask, render_template, request, json, redirect, session, url_for, escape, flash
 import mongo as db
 
 
@@ -11,8 +11,10 @@ app = Flask(
     template_folder='templates'
     )
 
+
+
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.secret_key = '\xe5\x0fn\xb9\xe7\xdbY\xfa\xcf\xa5\xac\x06\xab\xa7'
+app.secret_key = '\xe5\x0fn\xb9\xe7\xdbY\xfa\xcf\xa5\xac\x06\xab\xa7"\xe3\xf6b\xdb\x99U\x9a\xbb\x14'
 
 
 
@@ -33,18 +35,23 @@ def login():
     if request.method == 'POST':
         user = request.form['user']
         passwd = request.form['password']
-        data = db.find_user(user)
-        if not data :
-            flash('Usuario nao encontrado!','danger')
-            return render_template('login.html',user=None)
-        elif data['password'] != passwd:
-            flash('Senha incorreta!','danger')
-            return render_template('login.html',user=user)
+        if user == "":
+            flash('Nome de usuario invalido!','danger')
+        elif passwd == "":
+            flash('Senha invalida!','danger')
         else:
-            session['user'] = data['user']
-            session['_id'] = str(data['_id'])
-            session['logged_in'] = True
-            return redirect(url_for('usuarios'))
+            data = db.find_user(user)
+            if not data :
+                flash('Usuario nao encontrado!','danger')
+                return render_template('login.html',user=None)
+            elif data['password'] != passwd:
+                flash('Senha incorreta!','danger')
+                return render_template('login.html',user=user)
+            else:
+                session['user'] = data['user']
+                session['_id'] = str(data['_id'])
+                session['logged_in'] = True
+                return redirect(url_for('usuarios'))
     return render_template('login.html',user=user)
 
 
