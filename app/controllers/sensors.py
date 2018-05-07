@@ -1,0 +1,68 @@
+from flask import render_template, request, flash, redirect, url_for, session
+from app import app
+from app.models.sensors import Sensors
+from app.models.data import Data
+from app.models.users import Users
+from json import loads
+from app.controllers.login import login_required
+from pprint import pprint
+from app.controllers.data import create_data_csv, file
+
+@app.route('/sensors/create', methods=['GET','POST'])
+@login_required
+def create_sensor():
+    if request.method == 'POST':
+        sensor = Sensors(
+            user=request.form['user'],
+            name_sensor = request.form['name_sensor'],
+            type_sensor = request.form['type_sensor'],
+            model_sensor= request.form['model_sensor'],
+            local = request.form['local'],
+            device = request.form['device'],
+        )
+        client_sensor= sensor.to_json()
+        client_sensor = loads(client_sensor)
+        sensors = Sensors.objects(user=request.form['user'],name_sensor=request.form['name_sensor'])
+        if sensors:
+            flash('This sensor name already in use!','danger')
+            return render_template('sensors/create.html', sensor=client_sensor)
+        else:
+            sensor.save()
+            return redirect(url_for('user',user_id=session.get('id')))
+            
+    else:
+        return render_template('sensors/create.html', sensor=None)
+
+
+@app.route('/users/user/<user_id>/sensors/sensor/<sensor_id>/dashboard', methods=['GET','POST'])
+@login_required
+def dashboard(user_id,sensor_id):
+    data = []
+    labels = []
+    sensor_query = Sensors.objects(user=session.get('user'), id=sensor_id)
+    
+    if request.method == 'POST':
+        data = []
+        labels = []
+        data_day = Data.objects(user=session.get('user'), name_sensor=sensor_query[0]['name_sensor'],day=request.form['day'])
+        
+        create_data_csv(data_day,date, file)
+        for data_q in data_day:
+            data.append(data_q.value)
+            labels.append(data_q.hour)
+        flash('Exibindo %i resultados para %s'%(len(data_day),request.form['day']),'info')
+        return render_template('sensors/dashboard.html',sensor=sensor_query[0],data=data,labels=labels)
+    
+    data_query = Data.objects(user=session.get('user'), name_sensor=sensor_query[0]['name_sensor'])
+    create_data_csv(data_query,file)
+    for data_q in data_query:
+        data.append(data_q.value)
+        labels.append(data_q.hour)
+    
+    return render_template('sensors/dashboard.html',sensor=sensor_query[0],data=data,labels=labels)
+
+@app.route('/users/user/<user_id>/sensors')
+def sensors(user_id):
+    user = Users.objects(id=user_id)
+    sensors = Sensors.objects(user=user[0].user)
+    return render_template('sensors/sensors.html',sensors=sensors)

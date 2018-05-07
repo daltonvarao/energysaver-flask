@@ -1,0 +1,36 @@
+*{
+    font-family: 'Ubuntu Mono', sans-serif;
+    list-style-type: none !important ;
+}
+
+.bg-dark {
+    background-color: #363636 !important;
+}
+
+.dark {
+    background-color: #333 !important;
+}
+
+.card-header {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+/* 
+.chart-box {
+    width: 100%;
+} */
+
+.line-chart {
+    height: 300px !important;
+}
+ 
+@media screen and (min-width: 768px) {
+    .line-chart {
+        height: 360px !important;
+    }
+}
+ 
+@media screen and (min-width: 1024px) {
+    .line-chart {
+        height: 440px !important;
+    }
+}

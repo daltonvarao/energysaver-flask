@@ -1,0 +1,28 @@
+{% extends 'layout.html'%}
+
+{% block body %}
+<body>
+    <div class="container mt-1">
+        <h1>Sensors in {{sensors[0].local}}</h1>
+        <div class="container float-left col-11 col-sm-6 col-md-6 col-xl-12">
+            {% for sensor in sensors %}
+            <ul class="list-group float-left col-11 col-sm-6 col-md-6 col-xl-3">
+                <li class="list-group-item">
+                    <span class="w-25 ">Name  :</span> <span class="w-75"> {{sensor['name_sensor']}} </span>  
+                </li>
+                <li class="list-group-item">
+                    <span class="w-25 ">Type  :</span> <span class="w-75"> {{sensor['type_sensor']}} </span>
+                </li>
+                <li class="list-group-item">
+                    <span class="w-25 ">Model  :</span> <span class="w-75"> {{sensor['model_sensor']}} </span>
+                </li>
+                <li class="list-group-item">
+                    <span class="w-25 ">Device  :</span> <span class="w-75"> {{sensor['device']}} </span>
+                </li>
+                <a class="btn btn-primary col-12" href="/users/user/{{session['id']}}/sensors/sensor/{{sensor['id']}}/dashboard">Dashboard</a>
+            </ul>
+            {% endfor %}
+        </div>
+    </div>        
+</body>    
+{% endblock %}

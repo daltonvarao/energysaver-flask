@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <body>
+        <div class="container text-center">
+            {% if user %}
+            <br>
+            <h1>Hello {{user.user}}</h1>
+                {% if user.is_confirmed %}
+                    <p>Thank you for your confirmation!</p>
+                {% else %}
+                    <p>Please, for you security confirm you email!</p>
+                    <form class="col-11 col-xl-4 mx-auto" action="" method="post">
+                        <input class="form-control" type="text" name='id' placeholder="Put your id here">
+                        <button class="btn btn-primary col-12 mt-1">Confirm</button>
+                    </form><br>
+                {% endif %}
+            {% endif %}
+        </div>
+    </body>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="container mt-1">
+        <div class="row">
+            <div class="container col-11 col-sm-11 col-md-6 col-lg-3">
+                <br>
+                <h1>Users</h1>
+                {% if users %}
+                    <ul class="list-group">
+                        {% for user in users %}
+                            <li class="list-group-item">
+                                {{user.name}}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="alert alert-danger">
+                        Don't have users here yet!
+                    </div>
+                {% endif %}
+            </div>
+            <div class="container col-11 col-sm-11 col-md-6 col-lg-3">
+                <br>
+                <h1>Sensors</h1>
+                {% if sensors %}
+                <ul class="list-group">
+                        {% for sensor in sensors %}
+                            <li class="list-group-item">
+                                <span class="text-capitalize">{{sensor.user}}</span>: {{sensor.name_sensor}}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="alert alert-danger">
+                        Don't have sensors here yet!
+                    </div>
+                {% endif %}
+            </div>
+            <div class="container col-11 col-sm-11 col-md-6 col-lg-3">
+                <br>
+                <h1>Data</h1>
+                {% if data %}
+                <ul class="list-group">
+                        {% for device in devices %}
+                            <li class="list-group-item">
+                                <span class="text-dark">{{device}}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="alert alert-danger">
+                        Don't have data here yet!
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="container col-11 col-sm-11 col-md-6 col-lg-3">
+                <br>
+                <h1>Stats</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,303 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="container-fluid bg-light text-dark">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
+          <div class="sidebar-sticky">
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span style="font-size:16px">
+                    About
+                </span>
+            </h6>
+            <ul class="nav flex-column text-light">
+              <li class="nav-item">
+                <a class="nav-link">
+                  <i class="fa fa-home"></i>
+                  Name: {{sensor['name_sensor']}}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link">
+                  <i class="fa fa-bolt"></i>
+                  Type: {{sensor['type_sensor']}}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" >
+                  <i class="fa fa-map-marker"></i>
+                  Place: {{sensor['local']}}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" >
+                  <i class="fa fa-microchip"></i>
+                  Device: {{sensor['device']}}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" >
+                  <i class="fa fa-info-circle"></i>
+                  Model: {{sensor['model_sensor']}}
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span style="font-size:16px">
+                Data
+              </span>
+            </h6>
+            {% if data %}
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                  <a class="nav-link text-light">
+                    <i class="fa fa-sort"></i>
+                    Last: <span id="last_data">{{data|last|round(2,'floor')}}</span> 
+                  </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light">
+                  <i class="fa fa-database"></i>
+                  Count: <span id='count_data'>{{data|length}}</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light">
+                  <i class="fa fa-tachometer"></i>
+                  Average: <span id="media_data"> {{(data|sum/data|length)|round(2,'floor')}} </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light">
+                  <i class="fa fa-arrow-up"></i>
+                  Max: <span id="max_data"> {{data|max|round(2,'floor')}} </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light">
+                  <i class="fa fa-arrow-down"></i>
+                  Min: <span id="min_data">{{data|min|round(2,'floor')}}</span> 
+                </a>
+              </li>  
+              <li class="nav-item">
+                <a class="nav-link text-light" href="{{ url_for('download_data')}}">
+                  <i class="fa fa-download"></i>
+                  Download .csv
+                </a>
+              </li>    
+            </ul>
+            <input type="hidden" style="display:none" value="{{(data|sum/data|length)}}" id="current_media">
+            {% else %}
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                  <a class="nav-link text-light">
+                    <i class="fa fa-sort"></i>
+                    Last: <span id="last_data">0</span> 
+                  </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light">
+                  <i class="fa fa-database"></i>
+                  Count: <span id='count_data'>0</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light">
+                  <i class="fa fa-tachometer"></i>
+                  Average: <span id="avg_data">0</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light">
+                  <i class="fa fa-arrow-up"></i>
+                  Max: <span id="max_data">0</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light">
+                  <i class="fa fa-arrow-down"></i>
+                  Min: <span id="min_data">0</span> 
+                </a>
+              </li>  
+            </ul>
+            {% endif %}
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 ml-2">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">Dashboard</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="container">
+                <form class="form-inline" action="" method="post">
+                  <input type="text" class="form-control col-8 float-left" name='day' placeholder="Search">
+                  <button class="btn btn-outline-success col-4 float-left" >Search</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="chart-box">
+            <canvas class="my-4 line-chart"></canvas>
+          </div>
+          <div class="d-block d-sm-block d-md-none d-xl-none">
+              <h1 class="h2">Sensor</h1>
+              <div class="accordion" id="accordion">
+                  <div class="card">
+                      <div class="card-header p-1" id="headingOne">
+                      <h5 class="mb-0">
+                          <button class="btn btn-link float-left" type="button" data-toggle="collapse" data-target="#{{sensor['id']}}" aria-expanded="true" aria-controls="{{sensor['name']}}">
+                              <i class="fa fa-microchip"></i> {{ sensor['name_sensor']}} 
+                          </button>
+                      </h5>
+                      </div>
+                  
+                      <div id={{sensor['id']}} class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                      <div class="card-body">
+                          <h5>Detalhes: </h5>
+                          <ul class="list-group">
+                              <li class="list-group-item"><span class="w-50 float-left">Type: </span> <span class="w-50 float-right">{{ sensor['type_sensor']}}</span></li>
+                              <li class="list-group-item"><span class="w-50 float-left">Model: </span> <span class="w-50 float-right">{{ sensor['model_sensor']}}</span></li>
+                              <li class="list-group-item"><span class="w-50 float-left">Device: </span> <span class="w-50 float-right">{{ sensor['device']}}</span></li>
+                              <li class="list-group-item"><span class="w-50 float-left">Local: </span> <span class="w-50 float-right">{{ sensor['local']}}</span></li>
+                          </ul>
+                      </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <input id="data" value="{{data}}" style="display:none">
+    <input id="labels" value="{{labels}}" style="display:none">
+    <input id="type_sensor" value="{{sensor.type_sensor}}" style="display:none">
+    <input id="sensor_user" value="{{sensor.user}}" style="display:none">
+    <input id="name_sensor" value="{{sensor.name_sensor}}" style="display:none">
+
+
+    <script src="/js/jquery.min.js"></script>
+    <!-- Graphs -->
+    <script src="/js/Chart.min.js"></script>
+    <script>
+    
+      var data = eval($('#data').val());
+      var labels = eval($('#labels').val());
+      var type_sensor = $('#type_sensor').val();
+
+      var ctx = $(".line-chart");
+      var ChartGraph = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: type_sensor,
+            data: data,
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#17a2b8',
+            borderWidth: 1.5,
+            pointBackgroundColor: '#17a2b8',
+            pointRadius: .5,
+          },
+          ]
+        },
+        options: {
+          animation: false,
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [{
+              distribution: 'series',
+              ticks: {
+                beginAtZero: true,
+                suggestedMax: 1,
+              }
+            }],
+            xAxes: [{
+              distribution: 'series',
+              ticks: {
+                beginAtZero: false,
+              }
+            }]
+          },
+          legend: {
+            display: true,
+          },
+        }
+      });
+    </script>
+    
+    <script type="text/javascript" src='/js/socketio.js'></script>
+    <script type="text/javascript">
+        var socket = io.connect('http://'+document.domain+':'+location.port);
+
+        socket.on('connect', function(){
+            socket.emit('message','Ola seu pessoa!');
+        });
+
+        function media_gen(msg){
+            var current_media = parseFloat($('#current_media').val());
+            var current_count = parseFloat($("#count_data").html());
+            var current_sum = current_media*current_count;
+            current_sum = current_sum+msg['value'];
+            current_media = current_sum/(current_count+1);
+            return current_media.toFixed(3);
+        }
+
+        function current_media_gen(msg){
+          var current_count = parseFloat($("#count_data").html());
+          var current_sum = 0;
+          current_sum = current_sum+msg['value'];
+          current_media = current_sum/(current_count+1);
+          return current_media.toFixed(2);
+      }
+        
+        function update_chart(msg){
+          data_length = ChartGraph.data.datasets[0].data.length;              
+          if (data_length > 100){
+            ChartGraph.data.datasets[0].data.shift();
+            ChartGraph.data.labels.shift();
+          }
+            ChartGraph.data.labels.push(msg['hour']);
+            ChartGraph.data.datasets[0].data.push(msg['value']);
+            ChartGraph.update();
+        }
+
+        var sensor = {'user':$('#sensor_user').val(),'name_sensor':$('#name_sensor').val()}
+
+        var sum_val = 0;
+        var avg_val = 0;
+        socket.on('received-data', function(msg){
+          if ( msg.user == sensor.user && msg.name_sensor == sensor.name_sensor){
+            // atualiza o last
+            $('#last_data').html((msg['value']).toFixed(2));
+            // atualiza o total count
+            $('#count_data').html(parseInt($('#count_data').html())+1);
+            
+            // min max
+            var current_min = parseFloat($("#min_data").html());
+            var current_max = parseFloat($("#max_data").html());
+
+            if (msg['value'] > current_max ){
+              $('#max_data').html((msg['value']).toFixed(2));
+            } else if( msg['value'] < current_min){
+              $("#min_data").html((msg['value']).toFixed(2));
+            }
+
+            // media
+            $("#media_data").html(parseFloat(media_gen(msg)));
+            
+            // atualiza o grafico
+            update_chart(msg);
+
+            
+            $('#avg_data').html(parseFloat(current_media_gen(msg)));
+            
+          }
+          
+        });
+
+
+    </script>
+
+{% endblock  %}
