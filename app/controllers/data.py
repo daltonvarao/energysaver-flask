@@ -1,10 +1,8 @@
-from app import mqtt, socketio, app
+from app import socketio, app
 from app.models.data import Data
-from json import loads
 from flask_socketio import emit
 from flask import send_file
 import datetime
-
 
 
 def save_data(msg):
@@ -19,26 +17,6 @@ def save_data(msg):
     data.model_sensor = msg.get('model_sensor')
     data.value = msg.get('value')
     data.save()
-
-
-@mqtt.on_connect()
-def mqtt_on_connect(client, userdata, flags, rc):
-    pass
-    #mqtt.unsubscribe_all()
-    #print('Fazendo subscribe!\n')
-    #mqtt.subscribe('Tapajos-IoT')
-
-@mqtt.on_disconnect()
-def mqtt_on_disconnect():
-    print('\nDesconectando, fazendo unsubscribe!\n')
-    mqtt.unsubscribe_all()
-    
-
-@mqtt.on_message()
-def on_message(client, userdata, message):
-    msg = loads(message.payload.decode())
-    save_data(msg)
-    socketio.emit('received-data',msg)
 
 
 def create_data_csv(data_query,file):
@@ -57,7 +35,7 @@ def create_data_csv(data_query,file):
                 value=data_q.value
             ))
 
- 
+
 file = 'data.csv'
 @app.route('/download/'+file)
 def download_data():

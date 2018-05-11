@@ -5,9 +5,6 @@ MONGODB_SETTINGS = {
 
 TEMPLATES_AUTO_RELOAD = True
 
-# MQTT connection
-MQTT_BROKER_URL = 'localhost'
-MQTT_BROKER_PORT = 1883
 
 # FLASK MAIL
 MAIL_SERVER='smtp.gmail.com'
