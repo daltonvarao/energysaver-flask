@@ -5,6 +5,7 @@
     <div class="container mt-1">
         <h1>All sensors</h1>
         <div class="container float-left col-11 col-sm-6 col-md-6 col-xl-12">
+	{% if sensors %}
             {% for sensor in sensors %}
             <ul class="list-group float-left col-11 col-sm-6 col-md-6 col-xl-3">
                 <li class="list-group-item">
@@ -22,6 +23,12 @@
                 <a class="btn btn-primary col-12" href="/users/user/{{session['id']}}/sensors/sensor/{{sensor['id']}}/dashboard">Dashboard</a>
             </ul>
             {% endfor %}
+	{% else %}
+		<div class='alert alert-info'>
+		    <h1 class='h3'>You don't have sensors yet!</h1>
+		</div>		
+		<h5 class='h6'><a href='{{url_for("create_sensor")}}'>Click here</a> to create!</h5>
+	{% endif %}
         </div>
     </div>        
 </body>    

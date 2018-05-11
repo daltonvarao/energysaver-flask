@@ -56,9 +56,9 @@
                   </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-light">
+                <a class="nav-link text-light" title='Last {{data|length}} data '>
                   <i class="fa fa-database"></i>
-                  Count: <span id='count_data'>{{data|length}}</span>
+                  Count: <span id='count_data'>+{{data|length}}</span>
                 </a>
               </li>
               <li class="nav-item">
@@ -80,7 +80,7 @@
                 </a>
               </li>  
               <li class="nav-item">
-                <a class="nav-link text-light" href="{{ url_for('download_data')}}">
+                <a class="nav-link text-light" href="{{ url_for('download_data')}}" title='Download all data in database!'>
                   <i class="fa fa-download"></i>
                   Download .csv
                 </a>

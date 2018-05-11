@@ -42,15 +42,18 @@ def admin():
     users = Users.objects.all()
     sensors = Sensors.objects.all()
     data = Data.objects.all()
-    devices = set()
-    for i in data:
-        devices.add(i.device)
+    devices = [sensor.device for sensor in sensors]
+    places = [sensor.local for sensor in sensors]
+    stats = [[user.user,[sensor.name_sensor for sensor in Sensors.objects(user=user.user)]] for user in users]
+
     return render_template(
                             'admin/index.html',
                             users=users,
                             sensors=sensors,
+                            places=set(places),
+                            devices=set(devices),
                             data=data,
-                            devices=devices
+                            stats=stats
                             )
 
 
