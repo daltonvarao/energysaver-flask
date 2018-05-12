@@ -84,13 +84,7 @@
                   <i class="fa fa-download"></i>
                   Download .csv
                 </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sm btn-primary text-light" href="{{ url_for('edit_sensor', user_id=session['id'],sensor_id=sensor.id)}}" title='Edit current sensor'>
-                  <i class="fa fa-pencil"></i>
-                  Edit sensor
-                </a>
-              </li>    
+              </li> 
             </ul>
             <input type="hidden" style="display:none" value="{{(data|sum/data|length)}}" id="current_media">
             {% else %}
