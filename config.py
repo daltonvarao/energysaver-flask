@@ -3,7 +3,7 @@ MONGODB_SETTINGS = {
     'db': 'energy'
 }
 
-TEMPLATES_AUTO_RELOAD = True
+#TEMPLATES_AUTO_RELOAD = True
 
 
 # FLASK MAIL

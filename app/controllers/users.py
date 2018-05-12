@@ -98,6 +98,7 @@ def user_confirm(user_id):
 
 
 @app.route('/users/user/<user_id>/local/<local_name>')
+@login_required
 def places(user_id,local_name):
     user = Users.objects(id=user_id)
     sensors = Sensors.objects(user=user[0].user,local=local_name)

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block body %}
+<body>
+    <div class="jumbotron text-light col-11 col-sm-9 col-md-6 col-lg-4 bg-dark mx-auto mt-1">
+        <div class="text-center">
+            <h1 class="display-4 font-weight-light">Edit sensor</h1>
+        </div>
+        <div class="container text-center">
+            <form action="" method="post">
+                <input type="text" name="user" value="{{session['user']}}" style="display:none" required>
+                <input class="form-control mb-1" type="text" placeholder="Name sensor" name="name_sensor" value="{{sensor.name_sensor or ''}}" autofocus required disabled >
+                <input class="form-control mb-1" type="text" placeholder="Model sensor" name="model_sensor" value="{{sensor.model_sensor or ''}}" required >                
+                <input class="form-control mb-1" type="text" placeholder="Type sensor" name="type_sensor" value="{{sensor.type_sensor}}" required >
+                <input class="form-control mb-1" type="text" placeholder="Local" name="local" value="{{sensor.local or ''}}" required >
+                <input class="form-control mb-1" type="text" placeholder="Device" name="device" value="{{sensor.device or ''}}" required>
+                <button class="btn btn-success w-100">Update</button>
+            </form>
+            <br>
+            <a href="{{url_for('sensors', sensors=sensors,user_id=session.id)}}" class="btn btn-danger col-5 float-left">Cancelar</a>                
+            <button class="btn btn-danger col-5 float-right" id='delete'>Delete</button>
+            <a href="delete" class="btn btn-danger col-5 float-right" style="display: none" id='confirm_delete'>Confirm delete</a>                
+            
+        </div>
+    </div>
+</body>
+
+<script src="/js/jquery.min.js"></script>
+<script>
+    $('#delete').on('click', function(){
+        var delete_sensor = confirm('Are you sure delete this sensor?');
+        if (delete_sensor){
+            $('#delete').hide()
+            $('#confirm_delete').show()
+        }
+    });
+</script>
+
+{% endblock  %}

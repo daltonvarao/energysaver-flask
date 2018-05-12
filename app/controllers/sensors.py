@@ -34,6 +34,39 @@ def create_sensor():
         return render_template('sensors/create.html', sensor=None)
 
 
+
+@app.route('/users/user/<user_id>/sensors/sensor/<sensor_id>/edit', methods=['GET','POST'])
+@login_required
+def edit_sensor(user_id,sensor_id):
+    user = Users.objects(id=user_id)
+    sensor = Sensors.objects(user=user[0].user, id=sensor_id)
+    if request.method == 'POST':       
+        sensor.update_one(
+            name_sensor = request.form['name_sensor'],
+            type_sensor = request.form['type_sensor'],
+            model_sensor = request.form['model_sensor'],
+            device = request.form['device'],
+            local = request.form['local']
+        )
+        sensors = Sensors.objects.all()
+        flash('Success! Sensor updated!','success')
+        return redirect(url_for('sensors',sensors=sensors,user_id=user[0].id))
+    else:    
+        return render_template('sensors/edit.html', sensor=sensor[0])
+
+
+
+@app.route('/users/user/<user_id>/sensors/sensor/<sensor_id>/delete')
+@login_required
+def delete_sensor(user_id,sensor_id):
+    user = Users.objects(id=user_id)
+    Sensors.objects(user=user[0].user, id=sensor_id).delete()
+    sensors = Sensors.objects(user=user[0].user)
+    flash('Success! Sensor deleted!','success')
+    return redirect(url_for('sensors', sensors=sensors,user_id=user[0].id))
+    
+
+
 @app.route('/users/user/<user_id>/sensors/sensor/<sensor_id>/dashboard', methods=['GET','POST'])
 @login_required
 def dashboard(user_id,sensor_id):
@@ -46,7 +79,7 @@ def dashboard(user_id,sensor_id):
         labels = []
         data_day = Data.objects(user=session.get('user'), name_sensor=sensor_query[0]['name_sensor'],day=request.form['day'])
         
-        create_data_csv(data_day,date, file)
+        create_data_csv(data_day, file)
         for data_q in data_day:
             data.append(data_q.value)
             labels.append(data_q.hour)
@@ -59,9 +92,10 @@ def dashboard(user_id,sensor_id):
         data.append(data_q.value)
         labels.append(data_q.hour)
     
-    return render_template('sensors/dashboard.html',sensor=sensor_query[0],data=data[-1:int(len(data)-101):-1],labels=labels[-1:int(len(labels)-101):-1])
+    return render_template('sensors/dashboard.html',sensor=sensor_query[0],data=data,labels=labels)
 
 @app.route('/users/user/<user_id>/sensors')
+@login_required
 def sensors(user_id):
     user = Users.objects(id=user_id)
     sensors = Sensors.objects(user=user[0].user)

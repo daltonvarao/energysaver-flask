@@ -5,11 +5,13 @@ from app.controllers.data import save_data
 from json import loads
 from pprint import pprint
 
+topic = 'Tapajos-IoT'
 
 # MQTT ON CONNECT FOR SUBSCRIBE THE TOPIC
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-    client.subscribe("Tapajos-IoT")
+    print('Fazendo Subscribe on topic: {}'.format(topic))
+    client.subscribe(topic)
 
 
 # RECEIVE THE MESSAGE SENT TO BROKER 
@@ -28,8 +30,6 @@ if __name__ == '__main__':
     client.loop_start()
     socketio.run(
         app,
-        host='0.0.0.0',
-        use_reloader=True,
-        debug=True
+        host='0.0.0.0'
     )
 

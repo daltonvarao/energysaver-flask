@@ -59,6 +59,7 @@ def admin():
 
 
 @app.route('/admin/logout')
+@admin_required
 def admin_logout():
     session['is_admin'] = False
     return redirect(url_for('login'))

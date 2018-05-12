@@ -1,9 +1,12 @@
 from app import socketio, app
 from app.models.data import Data
 from flask_socketio import emit
+from app.controllers.login import login_required
 from flask import send_file
 import datetime
+import os
 
+path = os.path.abspath(os.path.dirname(__file__))
 
 def save_data(msg):
     data = Data()
@@ -36,7 +39,8 @@ def create_data_csv(data_query,file):
             ))
 
 
-file = 'data.csv'
-@app.route('/download/'+file)
+file = path+'data.csv'
+@app.route('/download/data.csv')
+@login_required
 def download_data():
-    return send_file('/home/dalton/projetos/python/energysaver/%s'%file)
+    return send_file('%s'%file)
