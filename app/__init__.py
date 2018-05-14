@@ -18,4 +18,4 @@ db = MongoEngine(app)
 socketio = SocketIO(app)
 mail = Mail(app)
 
-from app.controllers import login, users, sensors, admin, data
+from app.controllers import login, users, sensors, admin, data, send_mail

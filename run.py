@@ -10,7 +10,7 @@ topic = 'Tapajos-IoT'
 # MQTT ON CONNECT FOR SUBSCRIBE THE TOPIC
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-    print('Fazendo Subscribe on topic: {}'.format(topic))
+    print('Subscribe on topic: {}'.format(topic))
     client.subscribe(topic)
 
 
