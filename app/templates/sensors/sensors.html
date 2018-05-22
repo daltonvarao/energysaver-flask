@@ -4,12 +4,12 @@
 <body>
     <div class="container mt-1">
         <h1>All sensors</h1>
-        <div class="container float-left col-11 col-sm-6 col-md-6 col-xl-12">
-	{% if sensors %}
+        <div class="container float-left col-12 col-sm-6 col-md-6 col-xl-12">
+	         {% if sensors %}
             {% for sensor in sensors %}
-            <ul class="list-group float-left col-11 col-sm-6 col-md-6 col-xl-3">
+            <ul class="list-group float-left col-12 col-sm-6 col-md-6 col-xl-3">
                 <li class="list-group-item">
-                    <span class="w-25 ">Name  :</span> <span class="w-75"> {{sensor['name_sensor']}} </span>  
+                    <span class="w-25 ">Name  :</span> <span class="w-75"> {{sensor['name_sensor']}} </span>
                 </li>
                 <li class="list-group-item">
                     <span class="w-25 ">Type  :</span> <span class="w-75"> {{sensor['type_sensor']}} </span>
@@ -26,10 +26,10 @@
 	{% else %}
 		<div class='alert alert-info'>
 		    <h1 class='h3'>You don't have sensors yet!</h1>
-		</div>		
+		</div>
 		<h5 class='h6'><a href='{{url_for("create_sensor")}}'>Click here</a> to create!</h5>
 	{% endif %}
         </div>
-    </div>        
-</body>    
+    </div>
+</body>
 {% endblock %}
