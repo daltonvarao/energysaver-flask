@@ -1,0 +1,78 @@
+history
+taskset --help
+taskset
+cpu
+clear
+python run.py 
+export ADMIN_USERNAME='dalton'
+export PYTHONDONTWRITEBYTECODE=x
+export ADMIN_PASSWORD='dalton'
+ls
+source venv/bin/activate.fish 
+cd projects/energysaver/python/energysaver-flask/
+cd ~
+sudo su
+sudo cp 50-cloud-init.yaml 50-cloud-init.yaml.original
+cp 50-cloud-init.yaml 50-cloud-init.yaml.original
+nano 50-cloud-init.yaml 
+sudo nano /etc/network/interfaces 
+ls -al
+cd /etc/netplan/
+sudo /etc/init.d/networking restart 
+sudo nano /etc/resolv.conf 
+ifconfig 
+sudo dhclient
+sudo ifup lo
+ifup lo
+ifupdown
+sudo nano /etc/netplan
+sudo nano /etc/netplan/
+sudo apt install ifupdown
+sudo nano/etc/network/interfaces
+deactivate
+pip freeze > requirements.txt 
+pip install flask-mail
+pip install flask-socketio
+pip install flask-mqtt
+pip freeze
+pip install -r requirements.txt
+virtualenv --python=python3 venv
+cd energysaver-flask/
+git clone http://github.com/daltonfelipe/energysaver-flask
+rm -rf energysaver/
+cd ..
+cd energysaver/
+rm -rf energysaver-flask/
+exit
+nano app/controllers/data.py 
+nano run.py 
+nano app/__init__.py
+pip install paho-mqtt
+mosquitto_pub -h 'localhost' -m 'user' -t 'Tapajos-IoT'
+history 
+python --help 
+source activate.fish 
+./activate.fish
+cd venv/bin/
+cd app/
+cd ../
+rm -rf __pycache__/
+cd controllers/
+cd cdon
+cd models/
+rm __init__.pyc 
+fish exit
+source venv/bin/activate
+venv --python=python3 venv
+sudo apt install virtualenv
+sudo apt get install virtualenv
+pip3 install venv
+pip3 install virtualenv
+venv
+python3 --version
+ld
+pip3 install virtualev
+l
+cd python/
+nodemon
+npm i
