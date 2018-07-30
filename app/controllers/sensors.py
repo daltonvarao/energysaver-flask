@@ -79,7 +79,7 @@ def dashboard(user_id,sensor_id):
         labels = []
         data_day = Data.objects(user=session.get('user'), name_sensor=sensor_query[0]['name_sensor'],day=request.form['day'])
         
-        create_data_csv(data_day, file)
+        #create_data_csv(data_day, file)
         for data_q in data_day:
             data.append(data_q.value)
             labels.append(data_q.hour)
