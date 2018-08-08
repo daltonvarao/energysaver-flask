@@ -79,7 +79,7 @@ def dashboard(user_id,sensor_id):
     if request.method == 'POST':
         data = []
         labels = []
-        data_day = Data.objects(user=session.get('user'), name_sensor=sensor_query[0]['name_sensor'],day=request.form['day'])
+        data_day = Data.objects(user=session.get('user'), name_sensor=sensor_query[0]['name_sensor'],day=request.form['day']).limit(750)
         
         # cria o csv com os dados da pesquisa por dia
         create_data_csv(data_day, file)
@@ -92,15 +92,15 @@ def dashboard(user_id,sensor_id):
         return render_template('sensors/dashboard.html',sensor=sensor_query[0],data=data,labels=labels)
     
     # quando entra na pagina "dashboard"
-    data_query = Data.objects(user=session.get('user'), name_sensor=sensor_query[0]['name_sensor'])
+    data_query = Data.objects(user=session.get('user'), name_sensor = sensor_query[0]['name_sensor']).limit(750)
     
     # cria o csv para o download
-    create_data_csv(data_query,file)
+    create_data_csv(data_query, file)
     for data_q in data_query:
         data.append(data_q.value)
         labels.append(data_q.hour)
     
-    return render_template('sensors/dashboard.html',sensor=sensor_query[0],data=data[len(data)-750:],labels=labels[len(labels)-750:])
+    return render_template('sensors/dashboard.html',sensor=sensor_query[0],data=data,labels=labels)
 
 # retorna uma pagina com todos os sensores de um usuario
 @app.route('/users/user/<user_id>/sensors')
