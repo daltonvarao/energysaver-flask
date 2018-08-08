@@ -80,9 +80,6 @@ def dashboard(user_id,sensor_id):
         data = []
         labels = []
         data_day = Data.objects(user=session.get('user'), name_sensor=sensor_query[0]['name_sensor'],day=request.form['day'])
-        
-        # cria o csv com os dados da pesquisa por dia
-        create_data_csv(data_day, file)
 
         # dados para o plot do grafico na pagina
         for data_q in data_day:
@@ -94,8 +91,6 @@ def dashboard(user_id,sensor_id):
     # quando entra na pagina "dashboard"
     data_query = Data.objects(user=session.get('user'), name_sensor = sensor_query[0]['name_sensor']).limit(750)
     
-    # cria o csv para o download
-    create_data_csv(data_query, file)
     for data_q in data_query:
         data.append(data_q.value)
         labels.append(data_q.hour)

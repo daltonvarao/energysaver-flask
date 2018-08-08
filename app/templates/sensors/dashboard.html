@@ -80,7 +80,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-light" href="{{ url_for('download_data')}}" title='Download {{data|length}} data'>
+                <a class="nav-link text-light" href="{{ url_for('download_data', user=session['user'],name_sensor=sensor.name_sensor)}}" title='Download {{data|length}} data'>
                   <i class="fa fa-download"></i>
                   Download .csv
                 </a>
