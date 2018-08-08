@@ -100,7 +100,7 @@ def dashboard(user_id,sensor_id):
         data.append(data_q.value)
         labels.append(data_q.hour)
     
-    return render_template('sensors/dashboard.html',sensor=sensor_query[0],data=data,labels=labels)
+    return render_template('sensors/dashboard.html',sensor=sensor_query[0],data=data[len(data)-750:],labels=labels[len(labels)-750:])
 
 # retorna uma pagina com todos os sensores de um usuario
 @app.route('/users/user/<user_id>/sensors')

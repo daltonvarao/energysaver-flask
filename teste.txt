@@ -1,2 +1,0 @@
-Connected with result code 0
-Subscribe on topic: Tapajos-IoT
