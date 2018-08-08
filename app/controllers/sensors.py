@@ -79,7 +79,7 @@ def dashboard(user_id,sensor_id):
     if request.method == 'POST':
         data = []
         labels = []
-        data_day = Data.objects(user=session.get('user'), name_sensor=sensor_query[0]['name_sensor'],day=request.form['day']).limit(750)
+        data_day = Data.objects(user=session.get('user'), name_sensor=sensor_query[0]['name_sensor'],day=request.form['day'])
         
         # cria o csv com os dados da pesquisa por dia
         create_data_csv(data_day, file)
