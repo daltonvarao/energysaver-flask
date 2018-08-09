@@ -42,13 +42,13 @@ def save_data(msg):
 
 def create_data_csv(data_query, file):
     df = pd.DataFrame(list(data_query))
-    dados = df.to_csv(file)
+    df.to_csv(file)
     
 
 file = path+'data.csv'
-@app.route('<user>/<name_sensor>/download/data.csv')
+@app.route('/<user>/<name_sensor>/download/data.csv')
 @login_required
 def download_data(user, name_sensor):
-    data_query = Data.objects(user=session.get('user'), name_sensor = sensor_query[0]['name_sensor'])
+    data_query = Data.objects(user=user, name_sensor = name_sensor)
     create_data_csv(data_query, file)
     return send_file('%s'%file)
