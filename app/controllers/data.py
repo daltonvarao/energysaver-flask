@@ -6,6 +6,12 @@ from flask import send_file
 import datetime
 import pandas as pd
 import os
+from pymongo import MongoClient
+
+client = MongoClient("localhost", 27017)
+energy = client["energy"]
+data = energy["data"]
+
 
 path = os.path.abspath(os.path.dirname(__file__))
 
@@ -49,6 +55,6 @@ file = path+'data.csv'
 @app.route('/<user>/<name_sensor>/download/data.csv')
 @login_required
 def download_data(user, name_sensor):
-    data_query = Data.objects(user=user, name_sensor = name_sensor)
+    data_query = data.find({"user":user, "name_sensor": name_sensor})
     create_data_csv(data_query, file)
     return send_file('%s'%file)
