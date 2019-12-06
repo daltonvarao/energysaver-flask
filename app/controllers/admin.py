@@ -7,12 +7,8 @@ from app.models.users import Users
 from app.models.sensors import Sensors
 from app.models.data import Data
 
-#USERNAME = os.environ['ADMIN_USERNAME']
-#PASSWORD = os.environ['ADMIN_PASSWORD']
-
-USERNAME = "dalton"
-PASSWORD = "dalton"
-
+USERNAME = os.environ['ADMIN_USERNAME']
+PASSWORD = os.environ['ADMIN_PASSWORD']
 
 def admin_required(func):
     @wraps(func)
