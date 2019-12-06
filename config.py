@@ -1,6 +1,6 @@
 # Databse connection
 MONGODB_SETTINGS = {
-    'db': 'energy'
+    'db': 'energysaver'
 }
 
 #TEMPLATES_AUTO_RELOAD = True
@@ -11,6 +11,6 @@ MAIL_SERVER='smtp.gmail.com'
 MAIL_PORT=465
 MAIL_USE_SSL=True
 MAIL_USE_TLS = False
-MAIL_USERNAME = 'energysaverufopa@gmail.com'
-MAIL_PASSWORD = 'energysaver10'
-MAIL_DEFAULT_SENDER = 'energysaverufopa@gmail.com'
+MAIL_USERNAME = 'seuemail'
+MAIL_PASSWORD = 'suasenha'
+MAIL_DEFAULT_SENDER = 'seuemail'
