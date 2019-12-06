@@ -29,23 +29,6 @@ def save_data(msg):
     data.save()
 
 
-# def create_data_csv(data_query,file):
-#     with open(file,'w') as data_file:
-#         data_file.write('user,local,device,day,hour,name_sensor,type_sensor,model_sensor,value\n')
-#         for data_q in data_query:
-#             data_file.write('{user},{local},{device},{day},{hour},{name_sensor},{type_sensor},{model_sensor},{value}\n'.format(
-#                 user=data_q.user,
-#                 local=data_q.local,
-#                 device=data_q.device,
-#                 day=data_q.day,
-#                 hour=data_q.hour,
-#                 name_sensor=data_q.name_sensor,
-#                 type_sensor=data_q.type_sensor,
-#                 model_sensor=data_q.model_sensor,
-#                 value=data_q.value
-#             ))
-
-
 def create_data_csv(data_query, file):
     df = pd.DataFrame(list(data_query))
     df.to_csv(file)
