@@ -20,7 +20,6 @@ def create_user():
                 password=generate_password_hash(request.form['password']),
                 birth=request.form['birth']
             )
-        # transforma str em json
         client = loads(user.to_json())
         if users:
             flash('This username already in use!','danger')
@@ -74,7 +73,7 @@ def send_confirmation(user):
     html += '<p>Energysaver copyright 2017.</p>'
     msg = Message(
         subject = subject,
-        sender ='mydocumentsdy@gmail.com',
+        sender ='seuemail',
         recipients = [str(user.email)],
         html = html)
     mail.send(msg)
