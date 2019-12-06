@@ -8,7 +8,6 @@ from app.models.sensors import Sensors
 from app.controllers.login import login_required
 
 
-# cadastro de novo usuario
 @app.route('/users/create', methods=['GET','POST'])
 def create_user():
     if request.method == "POST":
@@ -41,7 +40,6 @@ def create_user():
         return render_template('users/create.html',user=None)
 
 
-# pagina do usuario
 @app.route('/users/user/<user_id>')
 @login_required
 def user(user_id):
@@ -67,7 +65,6 @@ def user(user_id):
         return redirect(url_for('login'))
 
 
-# envio confirmacao de cadastro por email
 def send_confirmation(user):
     subject = "Email confirmation" 
     html = '<h2>Hello, %s</h2><br>'%user.user
@@ -83,7 +80,6 @@ def send_confirmation(user):
     mail.send(msg)
 
 
-# confirmacao do usuario
 @app.route('/users/user/confirm/<user_id>',methods=["GET","POST"])
 @login_required
 def user_confirm(user_id):
@@ -101,7 +97,6 @@ def user_confirm(user_id):
     return render_template('users/confirmation.html',user=user[0])
 
 
-# pagina de locais dos sensores cadastrados de um usuario
 @app.route('/users/user/<user_id>/local/<local_name>')
 @login_required
 def places(user_id,local_name):
