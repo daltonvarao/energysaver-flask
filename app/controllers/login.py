@@ -19,8 +19,7 @@ def login_required(func):
 def login():
     if request.method == 'POST':
         client = request.form['user']
-        client_password = request.form['password']
-        # busca usuario no banco de dados
+        client_password = request.form['password']  
         user=Users.objects(user=client)
         if user:
             if check_password_hash(user[0].password,client_password):
